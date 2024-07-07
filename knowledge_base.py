@@ -347,4 +347,4 @@ class KnowledgeBase:
        if disease in self.enfermedades:
            return self.enfermedades[disease]['descripcion']
        else:
-           return "Virus no encontrada"
+           return "Virus no encontrado"

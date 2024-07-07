@@ -7,8 +7,8 @@ app = Flask(__name__)
 # Inicializa la base de conocimiento y el motor de inferencia
 kb = KnowledgeBase()
 ie = InferenceEngine(kb)
-list_sintomas = set([(x.lower()).replace(' ','_') for enf, info in kb.get_data().items() for x in info['sintomas']])
-list_sintomas = sorted(list_sintomas)
+# list_sintomas = set([(x.lower()).replace(' ','_') for enf, info in kb.get_data().items() for x in info['sintomas']])
+# list_sintomas = sorted(list_sintomas)
 
 @app.route('/', methods=['GET'])
 def index():
@@ -34,10 +34,6 @@ def process_answer():
     diagnosis, questions = ie.diagnose()
     return jsonify({"diagnosis": diagnosis, "questions": questions})
 
-@app.route('/disease_description/<disease>', methods=['GET'])
-def disease_description(disease):
-    description = kb.get_disease_description(disease)
-    return jsonify({"description": description})
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)

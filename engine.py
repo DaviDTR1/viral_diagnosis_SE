@@ -6,6 +6,8 @@ class InferenceEngine:
         self.reglas = self.base_conocimientos.get_rules()
         self.preguntas_realizadas = set() 
 
+    def sobrecarga(self, cont):
+        return (1+((cont/cont**0.5) * cont/20))**2
 
     def add_sintoma(self, sintoma):
         self.sintomas_paciente.add(sintoma)
@@ -41,53 +43,34 @@ class InferenceEngine:
 
     def diagnose(self):
         enfermedades_probables = {}
-        preguntas = self.preguntar_informacion_adicional()
-        
-        if preguntas:
-            print("preguntas")
-            return [], preguntas
-
-        
         data = self.base_conocimientos.get_data()
         for enfermedad, info in data.items():
-            
             x = 0
             y = 0
             z = 0
             
-            for sintoma , prob in info['sintomas'].items():
+            for sintoma , val in info['sintomas'].items():
                 if sintoma in self.sintomas_paciente:
-                    z = z+1 
-                else:
+                    z = z+1
+                    x = max(x, val)
+                    y = y+(val/len(info['sintomas'])/10)
                     
-                    
-                    
-            for sintoma in info['evolucion']:
-                if sintoma in self.sintomas_paciente
-                    y += 1
+            for sintoma, val in info['evolucion'].items():
+                if sintoma in self.sintomas_paciente:
+                    y += val/10
             
-            x *= overfitting(len(self.sintomas_paciente)-z)
-            x *= underfitting(len(info['sintomas']))
+            x = x*(1/sobrecarga(len(self.sintomas_paciente)-z))+y
 
-            enfermedades_probables.update(
-                {
-                    enfermedad: {
-                    "descripcion": data[enfermedad]["descripcion"],
-                    "tratamiento": data[enfermedad]["tratamiento"],
-                    "puntuacion": None
+            if x > 0.5:
+                enfermedades_probables.update(
+                    {
+                        enfermedad: {
+                        "descripcion": data[enfermedad]["descripcion"],
+                        "tratamiento": data[enfermedad]["tratamiento"],
+                        "puntuacion": x
+                        }
                     }
-                }
-            )
-                
-        mas_probable = None
-        puntuacion = 0
-        for enf, info in enfermedades_probables.items():
-            if info['puntuacion'] > puntuacion:
-                mas_probable = {enf : {
-                    "descripcion": info["descripcion"],
-                    "tratamiento": info["tratamiento"]
-                }}
-                puntuacion = info['puntuacion']
-        if mas_probable is None:
-            return {"Con los datos ingresados no es posible deducir"}, []
-        return mas_probable, []
+                )
+    enfermedades_probables = dict(sorted(enfermedades_probables.items(), key=lambda item:item[1]['puntuacion'], reverse=True))
+    print(enfermedades_probables)
+    return enfermedades_probables 
