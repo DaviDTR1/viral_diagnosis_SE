@@ -9,6 +9,13 @@ class InferenceEngine:
     def sobrecarga(self, cont):
         return (1+((cont/cont**0.5) * cont/20))**2
 
+    def clear_sintomas(self):
+        self.sintomas_paciente = set()
+        
+    def clear_questions(self):
+        self.preguntas_realizadas = set()
+        self.datos_adicionales = set()
+    
     def add_sintoma(self, sintoma):
         self.sintomas_paciente.add(sintoma)
     

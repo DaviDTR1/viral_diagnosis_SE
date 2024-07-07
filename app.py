@@ -18,17 +18,17 @@ def index():
 
 @app.route('/symptoms', methods=['POST', 'GET'])
 def api_symptoms():
-    """This function if receive a get request send a json with a the list of symptoms. If the 
-    function receive a post request this add the symptoms received to the engine
+    """This function if recive a get request send a json with a the list of symptoms. If the 
+    function recive a post request this add the symptoms recived to the engine
     """
     if(request.method == 'GET'):
        return jsonify({"symptoms" : list(list_sintomas)})
     
     symptoms = request.json.get('symptoms', [])
+    my_engine.clear_sintomas()
     for sintoma in symptoms:
         my_engine.add_sintoma(sintoma)
-    return jsonify({'success' : True})
-    
+    return jsonify({"success" : True})
 
 @app.route('/questions', methods=['POST', 'GET'])
 def api_questions():
@@ -39,8 +39,10 @@ def api_questions():
         return jsonify({"questions": questions})
     
     answers = request.json.get('answers')
+    my_engine.clear_questions()
     for answers in answers:
         my_engine.actualizar_datos_adicionales(answers['info'], answers['answer'])
+    return jsonify({"success" : True})
 
 @app.route('/diagnose')
 def get_diagnose():
