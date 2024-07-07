@@ -1,3 +1,4 @@
+"""Server app for Viral Diagnosis"""
 from flask import Flask, request, jsonify, render_template
 from knowledge_base import KnowledgeBase
 from engine import InferenceEngine
@@ -5,9 +6,9 @@ from engine import InferenceEngine
 app = Flask(__name__)
 
 # Inicializa la base de conocimiento y el motor de inferencia
-kb = KnowledgeBase()
-my_engine = InferenceEngine(kb)
-list_sintomas = set([x for enf, info in kb.get_data().items() for x in info['sintomas']])
+my_knowledge_base = KnowledgeBase()
+my_engine = InferenceEngine(my_knowledge_base)
+list_sintomas = set([x for enf, info in my_knowledge_base.get_data().items() for x in info['sintomas']])
 list_sintomas = sorted(list_sintomas)
 
 @app.route('/', methods=['GET'])
@@ -16,7 +17,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/symptoms', methods=['POST', 'GET'])
-def add_symptoms():
+def api_symptoms():
     """This function if recive a get request send a json with a the list of symptoms. If the 
     function recive a post request this add the symptoms recived to the engine
     """
@@ -28,32 +29,24 @@ def add_symptoms():
         my_engine.add_sintoma(sintoma)
     
 
-@app.route('/questions', methods=['POST'])
-def get_questions():
-    """Return a json file with the questions to ask in the format {"question" : (date for engine, question for the user)}"""
+@app.route('/questions', methods=['POST', 'GET'])
+def api_questions():
+    """Return a json file with the questions to ask in the format {"question" : ("info" for engine, "question" for the user)}
+    and recive a json file with the answer of the questions and add it to the engine"""
+    if request.method == 'GET':
+        questions = my_engine.preguntar_informacion_adicional()
+        return jsonify({"questions": questions})
     
-    questions = my_engine.preguntar_informacion_adicional()
-    return jsonify({"questions": questions})
+    answers = request.json.get('answers')
+    for answers in answers:
+        my_engine.actualizar_datos_adicionales(answers['info'], answers['answer'])
 
-# @app.route('/questions_answers', methods=['POST'])
-# def get_questions_answers():
-#     answers = request.json.get('answers', [])
-    
-#     for answer in answers:
-#         my_engine.actualizar_datos_adicionales(answer, )
+@app.route('/diagnose')
+def get_diagnose():
+    """Return the diagnose of the user based in the symptoms and the answer of the questions"""
+    diagnose = my_engine.diagnose()
+    return jsonify({'diagnose' : diagnose})
 
-# @app.route('/diagnose', methods=['POST'])
-# def get_diagnose():
-    
-
-@app.route('/process_answer', methods=['POST'])
-def process_answer():
-    answers = request.json
-    for sintoma, respuesta in answers.items():
-        if respuesta is not None:
-            ie.actualizar_datos_adicionales(sintoma, respuesta)
-    diagnosis, questions = ie.diagnose()
-    return jsonify({"diagnosis": diagnosis, "questions": questions})
 
 
 if __name__ == '__main__':

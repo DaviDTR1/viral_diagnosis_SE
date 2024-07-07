@@ -21,25 +21,25 @@ class InferenceEngine:
             puntaje = len(set(all_sintomas).intersection(set(sintomas)))
             if puntaje > mejor_puntaje:
                 mejor_puntaje = puntaje
-                mejor_regla = (all_sintomas, dato, pregunta)
-        return mejor_regla if mejor_puntaje > 0 else (None,None,None)
+                mejor_regla = (dato, pregunta)
+        return mejor_regla if mejor_puntaje > 0 else (None,None)
 
     def preguntar_informacion_adicional(self):
         preguntas = []
         while(True):
-            antecedente, dato, pregunta = self.mejor_regla_aplicable(self.sintomas_paciente)
-            if antecedente is None and dato is None and pregunta is None:
+            dato, pregunta = self.mejor_regla_aplicable(self.sintomas_paciente)
+            if dato is None and pregunta is None:
                 break
             if pregunta not in self.preguntas_realizadas:
                 self.preguntas_realizadas.add(pregunta)
-                preguntas.append({"sintoma": dato, "pregunta": pregunta})
+                preguntas.append({"info": dato, "question": pregunta})
             
         
         return preguntas
 
-    def actualizar_datos_adicionales(self, sintoma, respuesta):
-        if respuesta is not None and respuesta.lower() in ["sí", "si", "yes"]:
-            self.datos_adicionales.add(sintoma)
+    def actualizar_datos_adicionales(self, dato, respuesta):
+        if respuesta is not None and respuesta:
+            self.datos_adicionales.add(dato)
 
     def diagnose(self):
         enfermedades_probables = {}
