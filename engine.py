@@ -71,6 +71,6 @@ class InferenceEngine:
                         }
                     }
                 )
-    enfermedades_probables = dict(sorted(enfermedades_probables.items(), key=lambda item:item[1]['puntuacion'], reverse=True))
-    print(enfermedades_probables)
-    return enfermedades_probables 
+        enfermedades_probables = dict(sorted(enfermedades_probables.items(), key=lambda item:item[1]['puntuacion'], reverse=True))
+        # print(enfermedades_probables)
+        return enfermedades_probables 

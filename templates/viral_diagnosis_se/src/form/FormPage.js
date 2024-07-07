@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import NavBar from "../common/NavBar";
 import {
@@ -16,6 +16,29 @@ import * as Yup from 'yup';
 import { Link } from "react-router-dom";
 
 const FormPage = () => {
+    const [symptomsData, setSymptomsData] = useState([]);
+    // url = 'localhost:5000/symptoms'
+    const fetchData = () => {
+        fetch('/symptoms')
+        .then((response) => response.json())
+        .then((data) => setSymptomsData(data));
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    let symptomsOptions = [];
+    
+    try{
+        const symptoms = symptomsData.symptoms.map((symptomData) => (
+            { value: symptomData.replaceAll(' ','_'), label: symptomData }
+        ));
+        symptomsOptions = symptoms
+    } catch(e){
+
+    }
+
   const formik = useFormik({
     initialValues: {
         fullName: "",
@@ -32,11 +55,11 @@ const FormPage = () => {
     validationSchema: Yup.object({
       fullName: Yup.string().required("Required"),
       age: Yup.string().required("Required"),
-      symptoms: Yup.string().required("Required").oneOf([""]),
+      symptoms: Yup.string().required("Required").oneOf([symptomsOptions.value]),
     }),
   });
 
-    return(
+    return Object.keys(symptomsData).length > 0 ? (
         <>
             <NavBar />
             <Box>
@@ -69,7 +92,7 @@ const FormPage = () => {
                                 id="symptoms"
                                 name="symptoms"
                                 isMulti
-                                //options={symptomsOptions}
+                                options={symptomsOptions}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
                             {...formik.getFieldProps("symptoms")}
@@ -99,6 +122,8 @@ const FormPage = () => {
                 </VStack>
             </Box>
         </>
+    ) : (
+        <h1>Data pending...</h1>
     );
 };
 export default FormPage;

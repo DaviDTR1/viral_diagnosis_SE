@@ -21,7 +21,7 @@ def add_symptoms():
     function recive a post request this add the symptoms recived to the engine
     """
     if(request.method == 'GET'):
-       return jsonify({"symptoms" : list_sintomas})
+       return jsonify({"symptoms" : list(list_sintomas)})
     
     symptoms = request.json.get('symptoms', [])
     for sintoma in symptoms:
