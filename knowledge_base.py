@@ -20,7 +20,7 @@ class KnowledgeBase:
                     "cambio_secrecion_nasal": 0.8294,
                     "tos_persistente": 0.9362
                 },
-                "tratamiento": "La terapeutica queda limitada a medidas inespecificas como analgesicos y los anticongestivos, \n                    ademas de abundantes liquidos.\tHasta el momento no existen farmacos eficaces contra los virus \n                    que ocasionan el Resfriado comun.  Son inutiles los antibioticos utilizados contra las bacterias \n                    y no deben ser administrados, salvo en caso de complicaciones bacterianas."
+                "tratamiento": "La terapeutica queda limitada a medidas inespecificas como analgesicos y los anticongestivos, ademas de abundantes liquidos.\tHasta el momento no existen farmacos eficaces contra los virus que ocasionan el Resfriado comun.  Son inutiles los antibioticos utilizados contra las bacterias y no deben ser administrados, salvo en caso de complicaciones bacterianas."
             },
             "Faringitis Febril": {
                 "descripcion": "",
@@ -32,7 +32,7 @@ class KnowledgeBase:
                     "tos": 0.7469
                 },
                 "evolucion": {},
-                "tratamiento": "No hay tratamiento especifico de las infecciones por adenovirus, la aspirina y los jarabes \n                    ordinarios pueden aliviar un poco los sintomas. Deben evitarse las albercas durante la epidemia \n                    de Fiebre faringo conjuntival, y debe evitarse tambien la contaminacion de una persona a otra a \n                    traves de las secreciones oculares."
+                "tratamiento": "No hay tratamiento especifico de las infecciones por adenovirus, la aspirina y los jarabes ordinarios pueden aliviar un poco los sintomas. Deben evitarse las albercas durante la epidemia  de Fiebre faringo conjuntival, y debe evitarse tambien la contaminacion de una persona a otra a traves de las secreciones oculares."
             },
             "Herpangina": {
                 "descripcion": "Enfermedad infecciosa leve, mas frecuente en ninos pequenos",

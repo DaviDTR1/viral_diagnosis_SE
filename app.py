@@ -6,8 +6,9 @@ from engine import InferenceEngine
 app = Flask(__name__)
 
 # Inicializa la base de conocimiento y el motor de inferencia
-my_engine = InferenceEngine(KnowledgeBase())
-list_sintomas = set([x for enf, info in kb.get_data().items() for x in info['sintomas']])
+my_knowledge_base = KnowledgeBase()
+my_engine = InferenceEngine(my_knowledge_base)
+list_sintomas = set([x for enf, info in my_knowledge_base.get_data().items() for x in info['sintomas']])
 list_sintomas = sorted(list_sintomas)
 
 @app.route('/', methods=['GET'])

@@ -38,7 +38,7 @@ class InferenceEngine:
         return preguntas
 
     def actualizar_datos_adicionales(self, dato, respuesta):
-        if respuesta is not None and respuesta.lower() in ["sí", "si", "yes"]:
+        if respuesta is not None and respuesta:
             self.datos_adicionales.add(dato)
 
     def diagnose(self):
