@@ -51,7 +51,22 @@ const SymptomsFormMain = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert("Form sent!");
+        fetch('/symptoms',{
+            method: "POST",
+            headers: {
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify({'symptoms': symptomsSelect.map((symptomSelect) => (
+                symptomSelect.label
+            ))})
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log('Success:', data);
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
         clearForm();
       };
 
@@ -105,15 +120,15 @@ const SymptomsFormMain = () => {
                         color="white"
                         borderStyle="none"
                         borderRadius= "1.25rem"
-                        background= "#089BAC"
+                        background= "#C0EFF1"
                         boxShadow="0px 1px 2px 0px rgba(0, 0, 0, 0.05)"
                         // isLoading={isLoading}
-                    >
-                        <Link
+                    >Obtén predicción
+                        {/* <Link
                         // to="/evolutionForm"
                         // to="/results"
                         >
-                        Obtén predicción</Link>
+                        Obtén predicción</Link> */}
                     </Button>
                     </VStack>
                 </form>
