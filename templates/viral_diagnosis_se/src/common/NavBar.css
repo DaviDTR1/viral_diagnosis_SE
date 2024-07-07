@@ -1,0 +1,26 @@
+a {
+    text-decoration: none;
+    color: #089BAC;
+  }
+
+.navbar-button {
+    background:#FFFFFF;
+    border-radius: 1.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    font-family: Inter;
+    line-height: 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    gap: 1rem;
+    flex: 1;
+    width: 100%;
+  }
+
+.navbar-button:hover {
+    background:#C0EFF1;
+}
+
+.navbar-button:active {
+    background:#C0EFF1;
+}
