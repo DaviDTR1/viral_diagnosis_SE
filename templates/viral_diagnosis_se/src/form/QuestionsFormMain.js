@@ -11,6 +11,7 @@ import {
     HStack
   } from "@chakra-ui/react";
 import { RadioGroup, RadioOption } from "./Radio";
+import ResultsMain from "./ResultsMain"
 
 const QuestionsFormMain = (questions) => {
     const [answers, setAnswers] = useState({});
@@ -19,8 +20,9 @@ const QuestionsFormMain = (questions) => {
         setAnswers(prevAnswers => ({...prevAnswers, [name]: value}));
     }
     //results request
-    const [results, setResults] = useState(null);
-    const [shouldFetchResults, setShouldFetchResults] = useState(false);
+    const [results, setResults] = useState([]);
+    const [shouldFetchResults, setShouldFetchResults] = useState(Object.entries(questions.questions).length === 0);
+    console.log("length", Object.entries(questions.questions).length);
 
     const QuestionsForm = () => {
         return questions.questions.map((question) => (
@@ -33,11 +35,10 @@ const QuestionsFormMain = (questions) => {
             </FormControl>
         ));
     };
-
     const clearQuestionsForm = () => {
         setAnswers({});
+        setShouldFetchResults(false);
     };
-
     const handleQuestionsSubmit = (e) => {
         e.preventDefault();
         fetch('/questions',{
@@ -58,6 +59,27 @@ const QuestionsFormMain = (questions) => {
         });
         clearQuestionsForm();
       };
+
+      useEffect(() => {
+        console.log("entreeeee");
+        if (shouldFetchResults) {
+          fetch('/diagnose')
+            .then(response => response.json())
+            .then(resultsFetchedData => {
+              setResults(resultsFetchedData);
+              setShouldFetchResults(false); // Reset the flag
+            })
+            .catch(error => {
+              console.error('Error fetching data:', error);
+            });
+        }
+      }, [shouldFetchResults]);
+    // Conditional rendering based on the fetched data
+    
+    console.log(shouldFetchResults);
+    if (Object.keys(results).length > 0) {
+        return <ResultsMain results={results.diagnose} />
+    }
 
     return (
         <Box>
