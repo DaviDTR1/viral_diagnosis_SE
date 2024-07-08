@@ -13,44 +13,50 @@ import {
 import { RadioGroup, RadioOption } from "./Radio";
 
 const QuestionsFormMain = (questions) => {
-    const [selected, setSelected] = useState([]);
+    const [answers, setAnswers] = useState({});
+    const handleAnswer = (e) => {
+        const { name, value} = e.target;
+        setAnswers(prevAnswers => ({...prevAnswers, [name]: value}));
+    }
     //results request
     const [results, setResults] = useState(null);
     const [shouldFetchResults, setShouldFetchResults] = useState(false);
 
     const QuestionsForm = () => {
         return questions.questions.map((question) => (
-            <FormControl>
+            <FormControl key={question.info}>
                 <FormLabel htmlFor={question.info}>{question.question}</FormLabel>
-                <RadioGroup onChange={setSelected} selected={selected}>
-                    <RadioOption value="true">Sí</RadioOption>
-                    <RadioOption value="false">No</RadioOption>
+                <RadioGroup info={question.info} onChange={handleAnswer} answers={answers[question.info]}>
+                    <RadioOption info={question.info} value="true">Sí</RadioOption>
+                    <RadioOption info={question.info} value="false">No</RadioOption>
                 </RadioGroup>
             </FormControl>
         ));
     };
 
+    const clearQuestionsForm = () => {
+        setAnswers({});
+    };
+
     const handleQuestionsSubmit = (e) => {
         e.preventDefault();
-        console.log(selected);
-        // fetch('/questions',{
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": 'application/json',
-        //     },
-        //     body: JSON.stringify({'answers': symptomsSelect.map((symptomSelect) => (
-        //         symptomSelect.label
-        //     ))})
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        // console.log('Success:', data);
-        // setShouldFetchResults(true);
-        // })
-        // .catch((error) => {
-        // console.error('Error:', error);
-        // });
-        // clearQuestionsForm();
+        fetch('/questions',{
+            method: "POST",
+            headers: {
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify({'answers': answers
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log('Success:', data);
+        setShouldFetchResults(true);
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
+        clearQuestionsForm();
       };
 
     return (
@@ -76,7 +82,7 @@ const QuestionsFormMain = (questions) => {
                         borderRadius= "1.25rem"
                         background= "#C0EFF1"
                         boxShadow="0px 1px 2px 0px rgba(0, 0, 0, 0.05)"
-                        disabled={!selected}
+                        disabled={!answers}
                         // isLoading={isLoading}
                     >Obtén predicción
                         {/* <Link
