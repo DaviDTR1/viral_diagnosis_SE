@@ -1,4 +1,6 @@
-"""Server app for Viral Diagnosis"""
+"""Server app for Viral Diagnosis
+    Created by DaviDTR1
+"""
 from flask import Flask, request, jsonify, render_template
 from knowledge_base import KnowledgeBase
 from engine import InferenceEngine
