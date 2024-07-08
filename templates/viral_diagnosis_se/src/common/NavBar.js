@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useEffect, useState, useRef} from "react";
 import { Box, VStack, Button } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../img/logo.svg";
 import './NavBar.css';
 
@@ -29,7 +29,24 @@ const Prediction = () => {
     )
 };
 
+
 const NavBar = () => {
+    const location = useLocation()
+    const currentPath = location.pathname;
+    const [activeButtonId, setActiveButtonId] = useState(currentPath);
+    const buttonSRef = useRef(null);
+    const buttonPRef = useRef(null);
+
+    useEffect(() => {
+        if(activeButtonId === "/"){
+            buttonSRef.current.style.backgroundColor = "#C0EFF1";
+            buttonPRef.current.style.backgroundColor = "white";
+        }
+        if(activeButtonId === "/symptomForm"){
+            buttonSRef.current.style.backgroundColor = "white";
+            buttonPRef.current.style.backgroundColor = "#C0EFF1";
+        }
+    }, [activeButtonId]);
     return (
         <Box
             width="15vw"
@@ -51,6 +68,8 @@ const NavBar = () => {
                         alignItems="left"
                     >
                         <Button
+                            ref = {buttonSRef}
+                            id = "inicio_button"
                             className="navbar-button"
                             leftIcon={<Home />}
                             justifyContent="start"
@@ -58,6 +77,8 @@ const NavBar = () => {
                             _focus={{bg: "#C0EFF1"}}
                         ><Link to="/" >Inicio</Link></Button>
                         <Button
+                            ref = {buttonPRef}
+                            id = "prediccion_button"
                             className="navbar-button"
                             leftIcon={<Prediction />}
                             justifyContent="start"
