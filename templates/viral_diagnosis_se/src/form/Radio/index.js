@@ -1,4 +1,5 @@
 import * as React from "react";
+import { HStack } from "@chakra-ui/react";
 
 export const RadioGroup = ({ info, onChange, answers, children }) => {
   // Use React.Children.map and React.cloneElement to clone the children
@@ -24,7 +25,7 @@ export const RadioOption = ({ info, value, checked, onChange, children }) => {
         checked={checked}
         onChange={(e) => {onChange(e)}}
       />
-      <label htmlFor={`${info}-${value}`}>{children}</label>
+      <label htmlFor={`${info}-${value}`} marginLeft="1rem" className="card-subtitle">{children}</label>
     </div>
   );
 };

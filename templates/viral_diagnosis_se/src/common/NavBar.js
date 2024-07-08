@@ -32,9 +32,11 @@ const Prediction = () => {
 const NavBar = () => {
     return (
         <Box
-            width="20vw"
+            width="15vw"
             height="100vh"
             py="2.5rem"
+            borderRight="1px solid #E0E0E0"
+            boxShadow="4px 0px 8px 0px #F2F6F5"
         >
             <VStack
                 alignItems="center"

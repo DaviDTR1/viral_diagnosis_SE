@@ -6,7 +6,7 @@ import { HStack } from "@chakra-ui/react";
 const FormPage = () => {
     return(
         <>
-            <HStack spacing={0}>
+            <HStack spacing={0} alignItems="left">
                 <NavBar />
                 <SymptomsFormMain />
             </HStack>

@@ -4,7 +4,7 @@ body {
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.5rem;
+  line-height: 150%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

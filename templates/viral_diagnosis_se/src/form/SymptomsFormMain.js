@@ -3,17 +3,12 @@ import {
     Box,
     Button,
     FormControl,
-    FormErrorMessage,
     FormLabel,
     Heading,
     Input,
     VStack,
-    HStack
   } from "@chakra-ui/react";
-  import Select, { 
-    //   StylesConfig 
-   } from 'react-select';
-import { Link } from "react-router-dom";
+  import Select from 'react-select';
 import QuestionsFormMain from "./QuestionsFormMain";
 
 const SymptomsFormMain = () => {
@@ -94,71 +89,77 @@ const SymptomsFormMain = () => {
         return <QuestionsFormMain questions={questions.questions} />
     } 
         return (
-            <Box>
-                <VStack>
-                    <Heading>Escribe los datos</Heading>
+            <Box px="20vw" py="15vh">
+                <VStack alignItems="left" spacing="2rem">
+                    <Heading
+                    className="title"
+                    >Escribe los datos</Heading>
                     <Box>
-                    <form
-                        onSubmit={handleSubmit}
-                    >
-                        <VStack spacing={4} alignItems="left" w="30vw">
-                        <FormControl>
-                            <FormLabel htmlFor="fullName">Nombre</FormLabel>
-                            <Input
-                            id="fullName"
-                            name="fullName"
-                            placeholder="Nombre completo"
-                            value={fullName}
-                            onChange={e => setFullName(e.target.value)}
-                            />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="age">Edad</FormLabel>
-                            <Input
-                            id="age"
-                            name="age"
-                            placeholder="Edad"
-                            value={age}
-                            onChange={e => setAge(e.target.value)}
-                            />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel htmlFor="symptomsSelect">Síntomas</FormLabel>
-                            <Select
-                                //type="text"
-                                isMulti
-                                // closeMenuOnSelect={false}
-                                id="symptomsSelect"
-                                name="symptomsSelect"
-                                value={symptomsSelect}
-                                onChange={values => setSymptomsSelect(values)}
-                                options={symptomsOptions}
-                                className="basic-multi-select"
-                                classNamePrefix="select"
-                            />
-                        </FormControl>
-                        <Button
-                            type="submit"
-                            width="full"
-                            color="white"
-                            borderStyle="none"
-                            borderRadius= "1.25rem"
-                            background= "#C0EFF1"
-                            boxShadow="0px 1px 2px 0px rgba(0, 0, 0, 0.05)"
-                            // isLoading={isLoading}
-                        >Obtén predicción
-                            {/* <Link
-                            // to="/evolutionForm"
-                            // to="/results"
-                            >
-                            Obtén predicción</Link> */}
-                        </Button>
-                        </VStack>
-                    </form>
+                        <form
+                            onSubmit={handleSubmit}
+                        >
+                            <VStack spacing="2rem" alignItems="start">
+                            <VStack spacing="1rem" alignItems="left" w="30vw">
+                                <FormControl>
+                                    <FormLabel htmlFor="fullName">Nombre</FormLabel>
+                                    <Input
+                                    id="fullName"
+                                    name="fullName"
+                                    placeholder="Nombre completo"
+                                    value={fullName}
+                                    onChange={e => setFullName(e.target.value)}
+                                    w="95%"
+                                    className="input-text"
+                                    />
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel htmlFor="age">Edad</FormLabel>
+                                    <Input
+                                    id="age"
+                                    name="age"
+                                    placeholder="Edad"
+                                    value={age}
+                                    onChange={e => setAge(e.target.value)}
+                                    w="95%"
+                                    className="input-text"
+                                    />
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel
+                                    htmlFor="symptomsSelect"
+                                    marginBottom="0.5rem"
+                                    >Síntomas</FormLabel>
+                                    <Select
+                                        isMulti
+                                        id="symptomsSelect"
+                                        name="symptomsSelect"
+                                        value={symptomsSelect}
+                                        onChange={values => setSymptomsSelect(values)}
+                                        options={symptomsOptions}
+                                        className="basic-multi-select"
+                                        classNamePrefix="select"
+                                        theme={(theme) => ({
+                                            ...theme,
+                                            colors: {
+                                                ...theme.colors,
+                                                // primary25:"neutral10",
+                                                primary:"neutral160",
+                                                // primary50:"dangerLight",
+                                            },
+                                        })}
+                                    />
+                                </FormControl>
+                            </VStack>
+                            <Button
+                                    type="submit"
+                                    className="primary-button"
+                                >
+                                Obtén predicción</Button>
+                            </VStack>
+                        </form>
                     </Box>
                 </VStack>
             </Box>
         );
-    
 };
 export default SymptomsFormMain;

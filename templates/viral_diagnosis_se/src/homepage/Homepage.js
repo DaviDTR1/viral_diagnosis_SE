@@ -6,7 +6,7 @@ import { HStack } from "@chakra-ui/react";
 const Homepage = () => {
     return(
         <>
-            <HStack spacing={0}>
+            <HStack spacing={0} alignItems="start" justifyContent="start">
                 <NavBar />
                 <Main />
             </HStack>
