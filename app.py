@@ -26,6 +26,7 @@ def api_symptoms():
     
     symptoms = request.json.get('symptoms', [])
     my_engine.clear_sintomas()
+    my_engine.clear_questions()
     for sintoma in symptoms:
         my_engine.add_sintoma(sintoma)
     return jsonify({"success" : True})
@@ -39,9 +40,8 @@ def api_questions():
         return jsonify({"questions": questions})
     
     answers = request.json.get('answers')
-    my_engine.clear_questions()
-    for answer in answers:
-        my_engine.actualizar_datos_adicionales(answer['info'], answer['answer'])
+    for info, answer in answers.items():
+        my_engine.actualizar_datos_adicionales(info, answer)
     return jsonify({"success" : True})
 
 @app.route('/diagnose')
