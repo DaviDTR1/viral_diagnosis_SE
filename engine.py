@@ -45,7 +45,7 @@ class InferenceEngine:
         return preguntas
 
     def actualizar_datos_adicionales(self, dato, respuesta):
-        if respuesta is not None and respuesta:
+        if respuesta == 'True':
             self.datos_adicionales.add(dato)
 
     def diagnose(self):
@@ -63,12 +63,12 @@ class InferenceEngine:
                     y = y+(val/len(info['sintomas'])/10)
                     
             for sintoma, val in info['evolucion'].items():
-                if sintoma in self.sintomas_paciente:
+                if sintoma in self.datos_adicionales:
                     y += val/10
             
             x = x*(1/self.sobrecarga(len(self.sintomas_paciente)-z))+y
 
-            if x > 0.5:
+            if x > 0.80:
                 enfermedades_probables.update(
                     {
                         enfermedad: {
@@ -78,6 +78,6 @@ class InferenceEngine:
                         }
                     }
                 )
-        enfermedades_probables = dict(sorted(enfermedades_probables.items(), key=lambda item:item[1]['puntuacion'], reverse=True))
-        # print(enfermedades_probables)
+        if len(enfermedades_probables) > 0:
+            enfermedades_probables = dict(sorted(enfermedades_probables.items(), key=lambda item:item[1]['puntuacion'], reverse=True))
         return enfermedades_probables 
