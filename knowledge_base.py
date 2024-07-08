@@ -308,7 +308,7 @@ class KnowledgeBase:
             (self.enfermedades['Resfriado Comun']['sintomas'], "tos_persistente","Posee una tos persistente?"),
 
             # Herpangina
-            (self.enfermedades['Herpangina']['sintomas'], "aumento_brusco_temperatura", "Presento un amuento brusco en la temperatura?"),
+            (self.enfermedades['Herpangina']['sintomas'], "aumento_brusco_temperatura", "Presento un aumento brusco en la temperatura?"),
             (self.enfermedades['Herpangina']['sintomas'], "pupulas_petequias_paladar", "Presenta un pupulas o petequias en el paladar?"),
             
             # Influenza

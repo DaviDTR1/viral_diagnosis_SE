@@ -7,6 +7,8 @@ class InferenceEngine:
         self.preguntas_realizadas = set() 
 
     def sobrecarga(self, cont):
+        if cont == 0:
+            return 1    
         return (1+((cont/cont**0.5) * cont/20))**2
 
     def clear_sintomas(self):
@@ -64,7 +66,7 @@ class InferenceEngine:
                 if sintoma in self.sintomas_paciente:
                     y += val/10
             
-            x = x*(1/sobrecarga(len(self.sintomas_paciente)-z))+y
+            x = x*(1/self.sobrecarga(len(self.sintomas_paciente)-z))+y
 
             if x > 0.5:
                 enfermedades_probables.update(

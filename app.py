@@ -43,7 +43,7 @@ def api_questions():
     
     answers = request.json.get('answers')
     for info, answer in answers.items():
-        my_engine.actualizar_datos_adicionales(info, answer)
+        my_engine.actualizar_datos_adicionales(info, bool(answer))
     return jsonify({"success" : True})
 
 @app.route('/diagnose')
