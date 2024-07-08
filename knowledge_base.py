@@ -23,7 +23,7 @@ class KnowledgeBase:
                 "tratamiento": "La terapeutica queda limitada a medidas inespecificas como analgesicos y los anticongestivos, ademas de abundantes liquidos.\tHasta el momento no existen farmacos eficaces contra los virus que ocasionan el Resfriado comun.  Son inutiles los antibioticos utilizados contra las bacterias y no deben ser administrados, salvo en caso de complicaciones bacterianas."
             },
             "Faringitis Febril": {
-                "descripcion": "",
+                "descripcion": "Es una infección a corto plazo de la faringe (garganta), causada por diversos virus o bacterias",
                 "sintomas": {
                     "ligero dolor de garganta": 0.8192,
                     "obstruccion nasal": 0.8218,
