@@ -54,11 +54,15 @@ const NavBar = () => {
                             className="navbar-button"
                             leftIcon={<Home />}
                             justifyContent="start"
+                            _active={{bg: "#C0EFF1"}}
+                            _focus={{bg: "#C0EFF1"}}
                         ><Link to="/" >Inicio</Link></Button>
                         <Button
                             className="navbar-button"
                             leftIcon={<Prediction />}
                             justifyContent="start"
+                            _active={{bg: "#C0EFF1"}}
+                            _focus={{bg: "#C0EFF1"}}
                         ><Link to="/symptomForm" >Predicción</Link></Button>
                     </VStack>
                 </nav>

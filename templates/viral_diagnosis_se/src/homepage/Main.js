@@ -10,8 +10,8 @@ import {
 
 const Main = () => {
     return (
-        <main>
-            <Box px="20vw" py="15vh" background="radial-gradient(#C0EFF1, rgba(0, 0, 0, 0))">
+        <Box px="20vw" py="15vh" background="radial-gradient(#C0EFF1, rgba(0, 0, 0, 0))" w="45vw">
+            <main>
                 <VStack justifyContent="center" spacing="2.5rem" w="30vw">
                     <img src={logo} alt="Viral Diagnosis logo" width="60%"/>
                     <Heading
@@ -25,8 +25,8 @@ const Main = () => {
                     >
                     <Link to="/symptomForm" color="white">Obtén predicción</Link></Button>
                 </VStack>
-            </Box>
-        </main>
+            </main>
+        </Box>
     );
 };
 export default Main;
