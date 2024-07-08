@@ -29,6 +29,7 @@ def api_symptoms():
     my_engine.clear_questions()
     for sintoma in symptoms:
         my_engine.add_sintoma(sintoma)
+    print(my_engine.sintomas_paciente)
     return jsonify({"success" : True})
 
 @app.route('/questions', methods=['POST', 'GET'])
@@ -37,6 +38,7 @@ def api_questions():
     and recive a json file with the answer of the questions and add it to the engine"""
     if request.method == 'GET':
         questions = my_engine.preguntar_informacion_adicional()
+        print(questions)
         return jsonify({"questions": questions})
     
     answers = request.json.get('answers')

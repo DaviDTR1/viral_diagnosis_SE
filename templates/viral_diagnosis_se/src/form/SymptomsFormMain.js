@@ -14,6 +14,7 @@ import {
     //   StylesConfig 
    } from 'react-select';
 import { Link } from "react-router-dom";
+import QuestionsFormMain from "./QuestionsFormMain";
 
 const SymptomsFormMain = () => {
     const [symptomsData, setSymptomsData] = useState([]);
@@ -49,6 +50,10 @@ const SymptomsFormMain = () => {
         setSymptomsSelect([]);
     };
 
+    //questions request
+    const [questions, setQuestions] = useState([]);
+    const [shouldFetchQuestions, setShouldFetchQuestions] = useState(false);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         fetch('/symptoms',{
@@ -63,6 +68,7 @@ const SymptomsFormMain = () => {
         .then(response => response.json())
         .then(data => {
         console.log('Success:', data);
+        setShouldFetchQuestions(true);
         })
         .catch((error) => {
         console.error('Error:', error);
@@ -70,71 +76,89 @@ const SymptomsFormMain = () => {
         clearForm();
       };
 
-    return (
-        <Box>
-            <VStack>
-                <Heading>Escribe los datos</Heading>
-                <Box>
-                <form
-                    onSubmit={handleSubmit}
-                >
-                    <VStack spacing={4} alignItems="left" w="30vw">
-                    <FormControl>
-                        <FormLabel htmlFor="fullName">Nombre</FormLabel>
-                        <Input
-                        id="fullName"
-                        name="fullName"
-                        placeholder="Nombre completo"
-                        value={fullName}
-                        onChange={e => setFullName(e.target.value)}
-                        />
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel htmlFor="age">Edad</FormLabel>
-                        <Input
-                        id="age"
-                        name="age"
-                        placeholder="Edad"
-                        value={age}
-                        onChange={e => setAge(e.target.value)}
-                        />
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel htmlFor="symptomsSelect">Síntomas</FormLabel>
-                        <Select
-                            //type="text"
-                            isMulti
-                            // closeMenuOnSelect={false}
-                            id="symptomsSelect"
-                            name="symptomsSelect"
-                            value={symptomsSelect}
-                            onChange={values => setSymptomsSelect(values)}
-                            options={symptomsOptions}
-                            className="basic-multi-select"
-                            classNamePrefix="select"
-                        />
-                    </FormControl>
-                    <Button
-                        type="submit"
-                        width="full"
-                        color="white"
-                        borderStyle="none"
-                        borderRadius= "1.25rem"
-                        background= "#C0EFF1"
-                        boxShadow="0px 1px 2px 0px rgba(0, 0, 0, 0.05)"
-                        // isLoading={isLoading}
-                    >Obtén predicción
-                        {/* <Link
-                        // to="/evolutionForm"
-                        // to="/results"
-                        >
-                        Obtén predicción</Link> */}
-                    </Button>
-                    </VStack>
-                </form>
-                </Box>
-            </VStack>
-        </Box>
-    );
+      useEffect(() => {
+        if (shouldFetchQuestions) {
+          fetch('/questions')
+            .then(response => response.json())
+            .then(questionsFetchedData => {
+              setQuestions(questionsFetchedData);
+              setShouldFetchQuestions(false); // Reset the flag
+            })
+            .catch(error => {
+              console.error('Error fetching data:', error);
+            });
+        }
+      }, [shouldFetchQuestions]);
+    // Conditional rendering based on the fetched data
+    if (Object.keys(questions).length > 0) {
+        return <QuestionsFormMain questions={questions.questions} />
+    } 
+        return (
+            <Box>
+                <VStack>
+                    <Heading>Escribe los datos</Heading>
+                    <Box>
+                    <form
+                        onSubmit={handleSubmit}
+                    >
+                        <VStack spacing={4} alignItems="left" w="30vw">
+                        <FormControl>
+                            <FormLabel htmlFor="fullName">Nombre</FormLabel>
+                            <Input
+                            id="fullName"
+                            name="fullName"
+                            placeholder="Nombre completo"
+                            value={fullName}
+                            onChange={e => setFullName(e.target.value)}
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel htmlFor="age">Edad</FormLabel>
+                            <Input
+                            id="age"
+                            name="age"
+                            placeholder="Edad"
+                            value={age}
+                            onChange={e => setAge(e.target.value)}
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel htmlFor="symptomsSelect">Síntomas</FormLabel>
+                            <Select
+                                //type="text"
+                                isMulti
+                                // closeMenuOnSelect={false}
+                                id="symptomsSelect"
+                                name="symptomsSelect"
+                                value={symptomsSelect}
+                                onChange={values => setSymptomsSelect(values)}
+                                options={symptomsOptions}
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                            />
+                        </FormControl>
+                        <Button
+                            type="submit"
+                            width="full"
+                            color="white"
+                            borderStyle="none"
+                            borderRadius= "1.25rem"
+                            background= "#C0EFF1"
+                            boxShadow="0px 1px 2px 0px rgba(0, 0, 0, 0.05)"
+                            // isLoading={isLoading}
+                        >Obtén predicción
+                            {/* <Link
+                            // to="/evolutionForm"
+                            // to="/results"
+                            >
+                            Obtén predicción</Link> */}
+                        </Button>
+                        </VStack>
+                    </form>
+                    </Box>
+                </VStack>
+            </Box>
+        );
+    
 };
 export default SymptomsFormMain;

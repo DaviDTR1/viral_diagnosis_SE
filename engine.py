@@ -40,8 +40,6 @@ class InferenceEngine:
             if pregunta not in self.preguntas_realizadas:
                 self.preguntas_realizadas.add(pregunta)
                 preguntas.append({"info": dato, "question": pregunta})
-            
-        
         return preguntas
 
     def actualizar_datos_adicionales(self, dato, respuesta):
