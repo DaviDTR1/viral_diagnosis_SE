@@ -4,8 +4,12 @@
 from flask import Flask, request, jsonify, render_template
 from knowledge_base import KnowledgeBase
 from engine import InferenceEngine
+from data import models
+from data.client import engine
 
 app = Flask(__name__)
+
+models.Base.metadata.create_all(bind=engine)
 
 # Inicializa la base de conocimiento y el motor de inferencia
 my_knowledge_base = KnowledgeBase()

@@ -68,7 +68,7 @@ class InferenceEngine:
             
             x = x*(1/self.sobrecarga(len(self.sintomas_paciente)-z))+y
 
-            if x > 0.80:
+            if x > 0.70:
                 enfermedades_probables.update(
                     {
                         enfermedad: {

@@ -1,0 +1,6 @@
+flask
+sqlalchemy
+passlib
+pyjwt
+bcrypt
+python-multipart
